@@ -9,7 +9,6 @@ const RegisterForm = () => {
     const form = useForm();
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         console.log(data);
-        
     }
     return (
         <div className='max-w-md mx-auto'>
