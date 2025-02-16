@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Logo = () => {
+const LogoWithText = () => {
     return (
         <svg width="176" height="41" viewBox="0 0 176 41" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_111_415)">
@@ -42,4 +42,4 @@ const Logo = () => {
     )
 }
 
-export default Logo
+export default LogoWithText
