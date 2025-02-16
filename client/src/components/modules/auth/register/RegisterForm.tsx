@@ -8,6 +8,8 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import registrationSchema from './registerValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import { registrationUser } from '@/services/AuthService';
+import { toast } from 'sonner';
 
 const handleGoogleLogin = () => {
     console.log("Google login clicked");
@@ -23,10 +25,21 @@ const RegisterForm = () => {
     const form = useForm({
         resolver: zodResolver(registrationSchema),
     });
+    const { formState: { isSubmitting } } = form;
     const password = form.watch('password');
     const passwordComfirm = form.watch('passwordConfirm');
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        try {
+            const res = await registrationUser(data);
+            if (res.success) {
+                toast.success(res.message);
+            } else {
+                toast.error(res.message)
+            }
+        }
+        catch (error: any) {
+            console.log(error);
+        }
     }
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -152,7 +165,7 @@ const RegisterForm = () => {
                         </div>
 
                         <Button className='text-lg font-medium !py-6 px-7 rounded-full' disabled={
-                       (passwordComfirm !== null && password !== passwordComfirm) } type='submit'>Register</Button>
+                            (passwordComfirm !== null && password !== passwordComfirm)} type='submit'> { isSubmitting ? 'Registering': 'Register'}</Button>
                     </form>
                 </Form>
             </div>
