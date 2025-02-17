@@ -7,10 +7,10 @@ import React, { useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
-import { registrationUser } from '@/services/AuthService';
+import { loginUser } from '@/services/AuthService';
 import { toast } from 'sonner';
 import Link from 'next/link';
-import registrationSchema from '../register/registerValidation';
+import loginValidationSchema from './LoginValidation';
 
 const handleGoogleLogin = () => {
     console.log("Google login clicked");
@@ -23,12 +23,12 @@ const handleGithubLogin = () => {
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const form = useForm({
-        resolver: zodResolver(registrationSchema),
+        resolver: zodResolver(loginValidationSchema),
     });
     const { formState: { isSubmitting } } = form;
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         try {
-            const res = await registrationUser(data);
+            const res = await loginUser(data);
             if (res.success) {
                 toast.success(res.message);
             } else {
