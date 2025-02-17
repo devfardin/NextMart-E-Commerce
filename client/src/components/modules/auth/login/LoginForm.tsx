@@ -19,7 +19,7 @@ const LoginForm = () => {
     const form = useForm({
         resolver: zodResolver(loginValidationSchema),
     });
-    const googleRecaptcha = async (token: string | null ): Promise<void> => {
+    const googleRecaptcha = async (token: string | null): Promise<void> => {
         try {
             const res = await reCaptchaTokenVerification(token);
             if (res?.success) {
@@ -30,6 +30,7 @@ const LoginForm = () => {
         }
     }
     const { formState: { isSubmitting } } = form;
+
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         try {
             const res = await loginUser(data);
@@ -85,12 +86,6 @@ const LoginForm = () => {
                                     </FormItem>
                                 )}
                             />
-                            <div className='flex mt-4 justify-center'>
-                                <ReCAPTCHA
-                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
-                                    onChange={googleRecaptcha}
-                                />
-                            </div>
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
@@ -98,6 +93,12 @@ const LoginForm = () => {
                             >
                                 {showPassword ? <EyeOffIcon className="h-4 w-4 text-gray-500" /> : <EyeIcon className="h-4 w-4 text-gray-500" />}
                             </button>
+                        </div>
+                        <div className='flex mt-4 justify-center'>
+                            <ReCAPTCHA
+                                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
+                                onChange={googleRecaptcha}
+                            />
                         </div>
                         <Button disabled={reCaptchaStatus ? false : true} className='text-lg w-full font-medium !py-6 px-7 rounded-full' type='submit'> {isSubmitting ? 'Loging.... ' : 'Login'}
                         </Button>
