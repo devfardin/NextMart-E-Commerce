@@ -89,7 +89,7 @@ const LoginForm = () => {
                                 {showPassword ? <EyeOffIcon className="h-4 w-4 text-gray-500" /> : <EyeIcon className="h-4 w-4 text-gray-500" />}
                             </button>
                         </div>
-                        <Button className='text-lg w-full font-medium !py-6 px-7 rounded-full' type='submit'> {isSubmitting ? 'Registering' : 'Register'}
+                        <Button className='text-lg w-full font-medium !py-6 px-7 rounded-full' type='submit'> {isSubmitting ? 'Loging.... ' : 'Login'}
                         </Button>
                     </form>
                 </Form>
@@ -119,7 +119,7 @@ const LoginForm = () => {
                     </div>
                 </div>
                 <p className="mt-4 text-center text-sm text-gray-600">
-                    Not have an account?
+                    Do not have an account?
                     <Link href='/register' className="font-medium text-blue-600 hover:text-blue-500">
                         Sign up
                     </Link>
