@@ -12,7 +12,11 @@ export const registrationUser = async (userData: FieldValues) => {
             },
             body: JSON.stringify(userData)
         })
-        return res.json()
+        const result = await res.json()
+        if (result.success) {
+            ((await cookies()).set('accessToken', result?.data?.accessToken))
+        }
+        return result;
     } catch (error: any) {
         return Error(error)
     }
@@ -27,10 +31,10 @@ export const loginUser = async (userData: FieldValues) => {
             body: JSON.stringify(userData)
         });
         const result = await res.json()
-        if(result.success) {
+        if (result.success) {
             ((await cookies()).set('accessToken', result?.data?.accessToken))
         }
-        return result; 
+        return result;
     } catch (error: any) {
         return Error(error)
     }
@@ -39,10 +43,28 @@ export const loginUser = async (userData: FieldValues) => {
 export const getCurrentUser = async () => {
     const accessToken = ((await cookies()).get('accessToken'))!.value;
     let decodedData = null;
-    if(accessToken) {
+    if (accessToken) {
         decodedData = await jwtDecode(accessToken)
         return decodedData;
     } else {
         return null
+    }
+}
+
+export const reCaptchaTokenVerification = async (token: string | null) => {
+    try {
+        const res = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+            method: 'POST',
+            headers: {
+               "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({
+                secret: process.env.NEXT_PUBLIC_RECAPTCHA_SERVER_KEY!,
+                response: token!,
+            })
+        })
+        return res.json();
+    } catch(error: any) {
+        return Error(error);
     }
 }
