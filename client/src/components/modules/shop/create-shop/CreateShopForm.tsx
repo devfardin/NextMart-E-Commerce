@@ -1,25 +1,31 @@
 'use client'
-import Logo from '@/components/shared/Logo';
 import { Button } from '@/components/ui/button';
 import NMImageUploader from '@/components/ui/core/NMImageUploader/Index';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import React from 'react';
+import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-
+import dynamic from 'next/dynamic';
+import ImagePreviewer from './ImagePreviewer';
+const Logo = dynamic(() => import('@/components/shared/Logo'), { ssr: false });
 const CreateShopForm = () => {
-    const form = useForm();
+    const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+    const [imagePreview, setImagePreview] = useState<string[] | []>([]);
 
+    const form = useForm();
     const {
         formState: { isSubmitting },
     } = form;
-
-
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-
+        const servicesOffered = data.servicesOffered.split(',').map((service: string) => service.trim()).filter((service: string) => service !== '' );
+        const modifiedData = {
+            ...data,
+            servicesOffered,
+            establishedYear: Number(data.establishedYear),
+        }
+        
     };
-
     return (
         <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-4xl p-5 my-5 bg-white">
             <div className="flex items-center space-x-4 mb-5">
@@ -188,8 +194,9 @@ const CreateShopForm = () => {
                                     <FormItem>
                                         <FormLabel className='text-base font-semibold ml-1'>Services Offered</FormLabel>
                                         <FormControl>
-                                            <Textarea
-                                                className="h-36"
+                                            <Textarea 
+                                            placeholder='Enter categories separated by commas ( Electronics, Fashion, Home & Kitchen, Beauty & Personal Care )'
+                                                className="h-36 placeholder:text-base placeholder:text-gray-400 p-3"
                                                 {...field}
                                                 value={field.value || ""}
                                             />
@@ -200,31 +207,24 @@ const CreateShopForm = () => {
                             />
                         </div>
 
-                        <div className="mt-8">
-                            <NMImageUploader/>
-                         </div>
+                        {imagePreview.length > 0 ? (
+                            <ImagePreviewer
+                                setImageFiles={setImageFiles}
+                                imagePreview={imagePreview}
+                                setImagePreview={setImagePreview}
+                                className="mt-5"
+                            />
+                        ) : (
 
-                            {/* {imagePreview.length > 0 ? (
-            <ImagePreviewer
-              setImageFiles={setImageFiles}
-              imagePreview={imagePreview}
-              setImagePreview={setImagePreview}
-              className="mt-8"
-            />
-          ) : (
-            <div className="mt-8">
-              <NMImageUploader
-                setImageFiles={setImageFiles}
-                setImagePreview={setImagePreview}
-                label="Upload Logo"
-              />
-            </div>
-          )} */}
-                        </div>
+                            <div className="mt-5">
+                                <NMImageUploader setImagePreview={setImagePreview} label='Upload Logo' setImageFiles={setImageFiles} />
+                            </div>
+                        )}
+                    </div>
 
-                        <Button type="submit" className="text-lg w-full font-medium !py-6 px-7 rounded-full mt-5">
-                            {isSubmitting ? "Creating...." : "Create"}
-                        </Button>
+                    <Button type="submit" className="text-lg w-full font-medium !py-6 px-7 rounded-full mt-5">
+                        {isSubmitting ? "Creating...." : "Create"}
+                    </Button>
                 </form>
             </Form>
         </div>
