@@ -1,10 +1,22 @@
-export const middleware = async () => {
-    console.log('hellow world');
-    
+import { NextRequest, NextResponse } from "next/server";
+import { getCurrentUser } from "./services/AuthService"
+
+const authRoutes = ['/login', '/register'];
+export const middleware = async (request: NextRequest) => {
+    const {pathname} = request.nextUrl;
+    const userInof = await getCurrentUser();
+    if(!userInof) {
+        if(authRoutes.includes(pathname)){
+            return NextResponse.next(); 
+        } 
+        else {
+            return NextResponse.redirect(new URL(`http://localhost:3000/login?redirectpath=${pathname}`, request.url))
+        }
+    }
 }
 export const config = {
     matcher: [
         '/login',
-        '/create-shop'
+        '/create-shop',
     ]
 }
