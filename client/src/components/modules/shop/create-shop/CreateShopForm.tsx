@@ -8,23 +8,42 @@ import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import dynamic from 'next/dynamic';
 import ImagePreviewer from './ImagePreviewer';
+import { toast } from 'sonner';
+import { createShop } from '@/services/Shop';
 const Logo = dynamic(() => import('@/components/shared/Logo'), { ssr: false });
 const CreateShopForm = () => {
     const [imageFiles, setImageFiles] = useState<File[] | []>([]);
     const [imagePreview, setImagePreview] = useState<string[] | []>([]);
-
     const form = useForm();
     const {
         formState: { isSubmitting },
     } = form;
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        const servicesOffered = data.servicesOffered.split(',').map((service: string) => service.trim()).filter((service: string) => service !== '' );
+        const servicesOffered = data.servicesOffered.split(',').map((service: string) => service.trim()).filter((service: string) => service !== '');
         const modifiedData = {
             ...data,
             servicesOffered,
             establishedYear: Number(data.establishedYear),
         }
-        
+        try {
+            const formData = new FormData();
+            formData.append('data', JSON.stringify(modifiedData))
+            formData.append('logo', imageFiles[0] as File)
+            try {
+                const res = await createShop(formData);
+                if (res.success) {
+                    toast.success(res.message);
+                } else {
+                    toast.error(res.message)
+                }
+            }
+            catch (error: any) {
+                console.log(error);
+            }
+        } catch (error: any) {
+            toast.error(error?.message)
+        }
+
     };
     return (
         <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-4xl p-5 my-5 bg-white">
@@ -194,8 +213,8 @@ const CreateShopForm = () => {
                                     <FormItem>
                                         <FormLabel className='text-base font-semibold ml-1'>Services Offered</FormLabel>
                                         <FormControl>
-                                            <Textarea 
-                                            placeholder='Enter categories separated by commas ( Electronics, Fashion, Home & Kitchen, Beauty & Personal Care )'
+                                            <Textarea
+                                                placeholder='Enter categories separated by commas ( Electronics, Fashion, Home & Kitchen, Beauty & Personal Care )'
                                                 className="h-36 placeholder:text-base placeholder:text-gray-400 p-3"
                                                 {...field}
                                                 value={field.value || ""}
