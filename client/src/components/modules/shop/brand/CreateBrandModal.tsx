@@ -1,17 +1,12 @@
 'use client'
-import { FaGoogle, FaGithub } from "react-icons/fa";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import React, { useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
-import { registrationUser } from '@/services/AuthService';
 import { toast } from 'sonner';
-import Link from 'next/link';
 import {
     Dialog,
     DialogContent,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -23,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import ImagePreviewer from "../create-shop/ImagePreviewer";
 import NMImageUploader from "@/components/ui/core/NMImageUploader/Index";
 import { createCategory } from "@/services/Category";
+import { createBrand } from "@/services/Brand";
 
 const CreateBrandModal = () => {
     const [imageFiles, setImageFiles] = useState<File[] | []>([]);
@@ -35,8 +31,8 @@ const CreateBrandModal = () => {
         try {
             const formData = new FormData();
             formData.append('data', JSON.stringify(data));
-            formData.append('icon', imageFiles[0] as File);
-            const res = await createCategory(formData);
+            formData.append('logo', imageFiles[0] as File);
+            const res = await createBrand(formData);
             if (res.success) {
                 toast.success(res.message);
             } else {
