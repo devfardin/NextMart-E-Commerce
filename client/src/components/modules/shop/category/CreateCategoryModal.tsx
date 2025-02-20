@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import ImagePreviewer from "../create-shop/ImagePreviewer";
 import NMImageUploader from "@/components/ui/core/NMImageUploader/Index";
+import { createCategory } from "@/services/Category";
 
 const CreateCategoryModal = () => {
     const [imageFiles, setImageFiles] = useState<File[] | []>([]);
@@ -32,7 +33,10 @@ const CreateCategoryModal = () => {
     const { formState: { isSubmitting } } = form;
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         try {
-            const res = await registrationUser(data);
+            const formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+            formData.append('icon', imageFiles[0] as File);
+            const res = await createCategory(formData);
             if (res.success) {
                 toast.success(res.message);
             } else {
