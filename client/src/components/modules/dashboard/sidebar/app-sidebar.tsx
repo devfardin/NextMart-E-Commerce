@@ -6,8 +6,10 @@ import {
   Command,
   Frame,
   GalleryVerticalEnd,
+  LayoutDashboard,
   Map,
   PieChart,
+  ShoppingBagIcon,
   SquareTerminal,
 } from "lucide-react"
 
@@ -24,7 +26,6 @@ import { NavUser } from "./nav-user"
 import { useUser } from "@/context/UserContext"
 
 // This is sample data.
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user: currentUser } = useUser();
   const data = {
@@ -43,41 +44,46 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     navMain: [
       {
-        title: "Playground",
-        url: "#",
-        icon: SquareTerminal,
+        title: "Dashboard",
+        url: "/user/dashboard",
+        icon: LayoutDashboard,
         isActive: true,
+      },
+      {
+        title: "Shop",
+        url: "/user/shop/all-products",
+        icon: ShoppingBagIcon,
         items: [
           {
-            title: "History",
-            url: "#",
+            title: "Manage Products",
+            url: "/user/shop/all-products",
           },
           {
-            title: "Starred",
-            url: "#",
+            title: "Manage Categories",
+            url: "/user/shop/category",
           },
           {
-            title: "Settings",
-            url: "#",
+            title: "Manage Brands",
+            url: "/user/shop/brand",
           },
         ],
       },
       {
-        title: "Models",
-        url: "#",
-        icon: Bot,
+        title: "Setting",
+        url: "/user/setting/all-products",
+        icon: ShoppingBagIcon,
         items: [
           {
-            title: "Genesis",
-            url: "#",
+            title: "Manage Products",
+            url: "/user/shop/all-products",
           },
           {
-            title: "Explorer",
-            url: "#",
+            title: "Manage Categories",
+            url: "/user/shop/category",
           },
           {
-            title: "Quantum",
-            url: "#",
+            title: "Manage Brands",
+            url: "/user/shop/brand",
           },
         ],
       },
