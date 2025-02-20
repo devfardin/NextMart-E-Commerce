@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button"
 import CreateCategoryModal from "./CreateCategoryModal"
+import { getAllCategories } from "@/services/Category"
 
-const ManageCategory = () => {
+const ManageCategory = async () => {
+  const result = await getAllCategories();
+  console.log(result);
+  
   return (
     <div>
         <div className="flex items-center justify-between gap-5 py-3 px-4 border rounded">
