@@ -23,12 +23,13 @@ import { Textarea } from "@/components/ui/textarea";
 import ImagePreviewer from "../create-shop/ImagePreviewer";
 import NMImageUploader from "@/components/ui/core/NMImageUploader/Index";
 import { createCategory } from "@/services/Category";
+import { categoryValidation } from "./CategoryValidation";
 
 const CreateCategoryModal = () => {
     const [imageFiles, setImageFiles] = useState<File[] | []>([]);
     const [imagePreview, setImagePreview] = useState<string[] | []>([]);
     const form = useForm(
-        // { resolver: zodResolver(registrationSchema),}
+        { resolver: zodResolver(categoryValidation),}
     );
     const { formState: { isSubmitting } } = form;
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {

@@ -19,12 +19,13 @@ import ImagePreviewer from "../create-shop/ImagePreviewer";
 import NMImageUploader from "@/components/ui/core/NMImageUploader/Index";
 import { createCategory } from "@/services/Category";
 import { createBrand } from "@/services/Brand";
+import { brandValidation } from './brandValidation';
 
 const CreateBrandModal = () => {
     const [imageFiles, setImageFiles] = useState<File[] | []>([]);
     const [imagePreview, setImagePreview] = useState<string[] | []>([]);
     const form = useForm(
-        // { resolver: zodResolver(registrationSchema),}
+        { resolver: zodResolver(brandValidation),}
     );
     const { formState: { isSubmitting } } = form;
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
