@@ -24,7 +24,7 @@ import ImagePreviewer from "../create-shop/ImagePreviewer";
 import NMImageUploader from "@/components/ui/core/NMImageUploader/Index";
 import { createCategory } from "@/services/Category";
 
-const CreateCategoryModal = () => {
+const CreateBrandModal = () => {
     const [imageFiles, setImageFiles] = useState<File[] | []>([]);
     const [imagePreview, setImagePreview] = useState<string[] | []>([]);
     const form = useForm(
@@ -51,13 +51,13 @@ const CreateCategoryModal = () => {
         <Dialog>
             <DialogTrigger asChild>
                 <Button className="rounded text-lg font-normal">
-                    Create Cagetory
+                    Create Brand
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] md:max-w-xl">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-bold text-gray-900">
-                        Create a New Category
+                        Create a New Brand
                     </DialogTitle>
                 </DialogHeader>
                 <div className="w-full space-y-8">
@@ -68,41 +68,18 @@ const CreateCategoryModal = () => {
                                 name="name"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className='text-base font-semibold ml-1'>Category Name</FormLabel>
+                                        <FormLabel className='text-base font-semibold ml-1'>Brand Name</FormLabel>
                                         <FormControl>
                                             <Input className='py-6 px-5 border border-primary !rounded-sm focus:border focus:border-primary outline-none focus:outline-none !text-base'
                                                 {...field} value={field.value || ''}
-                                                placeholder='Category name'
+                                                placeholder='Brand name'
                                             />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
-                                )}
-                            />
+                                )} />
 
-                            <div className="mt-4">
-                                <div className="col-span-4 md:col-span-3">
-                                    <FormField
-                                        control={form.control}
-                                        name="description"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className='text-base font-semibold ml-1'>Category Description</FormLabel>
-                                                <FormControl>
-                                                    <Textarea
-                                                        placeholder='Enter categories description'
-                                                        className="h-36 rounded-sm border-primary placeholder:text-base placeholder:text-gray-400 p-3"
-                                                        {...field}
-                                                        value={field.value || ""}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-
-                                {imagePreview.length > 0 ? (
+                                { imagePreview.length > 0 ? (
                                     <ImagePreviewer
                                         setImageFiles={setImageFiles}
                                         imagePreview={imagePreview}
@@ -114,8 +91,6 @@ const CreateCategoryModal = () => {
                                         <NMImageUploader setImagePreview={setImagePreview} label='Category Image' setImageFiles={setImageFiles} />
                                     </div>
                                 )}
-                            </div>
-
                             <Button className='text-lg w-full font-medium !py-6 px-7 rounded-sm' disabled={isSubmitting} type='submit'> {isSubmitting ? 'Creating' : 'Create Category'}
                             </Button>
                         </form>
@@ -128,4 +103,4 @@ const CreateCategoryModal = () => {
     )
 }
 
-export default CreateCategoryModal
+export default CreateBrandModal
