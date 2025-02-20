@@ -41,7 +41,7 @@ export default function DashboardLayout({children}: {children: React.ReactNode})
           </div>
         </header>
         <div className="p-4 pt-0">
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+          <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min">
           {children}
           </div>
         </div>
