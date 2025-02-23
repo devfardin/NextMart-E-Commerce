@@ -1,11 +1,10 @@
-import { Button } from "@/components/ui/button"
 import CreateCategoryModal from "./CreateCategoryModal"
-import { getAllCategories } from "@/services/Category"
+import { ICategory } from "@/types"
 
-const ManageCategory = async () => {
-  const result = await getAllCategories();
-  console.log(result);
-  
+type TCategoriesProps ={
+  categories: ICategory[]
+}
+const ManageCategory = async ({categories}: {categories: TCategoriesProps}) => {
   return (
     <div>
         <div className="flex items-center justify-between gap-5 py-3 px-4 border rounded">
