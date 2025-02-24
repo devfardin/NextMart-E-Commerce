@@ -42,8 +42,7 @@ export default function AddProductsForm() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
   const [categories, setCategories] = useState<ICategory[] | []>([]);
-  const [brands, setBrands] = useState<IBrand[] | []>([]);
-
+  const [brands, setBrands] = useState<IBrand[] | []>([]); 
   const router = useRouter();
 
   const form = useForm({
