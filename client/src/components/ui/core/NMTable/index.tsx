@@ -32,14 +32,14 @@ export function NMTable<TData, TValue>({
   })
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow key={headerGroup.id} className="bg-gray-200 rounded">
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="p-3">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
