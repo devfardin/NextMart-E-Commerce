@@ -56,7 +56,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: "Manage Products",
-            url: "/user/shop/all-products",
+            url: "/user/shop/create-product",
           },
           {
             title: "Manage Categories",

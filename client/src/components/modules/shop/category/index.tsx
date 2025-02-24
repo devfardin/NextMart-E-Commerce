@@ -9,12 +9,13 @@ import { Trash } from "lucide-react"
 import { toast } from "sonner"
 import { deleteCategory } from "@/services/Category"
 
-type TCategoriesProps = {
-  categories: ICategory[]
+type TCategoriesRowProps = {
+  categories: ICategory[],
 }[]
-const ManageCategory = async ({ categories }: { categories: TCategoriesProps[] }) => {
 
-  const handleDelete = async(id: string) => {
+const ManageCategory = ({ categories }: { categories: TCategoriesRowProps[] }) => {
+
+  const handleDelete = async (id: string) => {
     const res = await deleteCategory(id);
     if (res.success) {
       toast.success(res.message);
@@ -22,11 +23,11 @@ const ManageCategory = async ({ categories }: { categories: TCategoriesProps[] }
       toast.error(res.message)
     }
   }
-  const columns: ColumnDef<TCategoriesProps>[] = [
+  const columns: ColumnDef<TCategoriesRowProps>[] = [
     {
       accessorKey: "name",
       header: () => <div className="text-lg text-neutral-800"> Category Name</div>,
-      cell: ({ row }) => (
+      cell: ({ row }: any) => (
         <div className="flex items-center gap-3">
           <Image src={row.original?.icon}
             alt={row.original?.name}
@@ -45,7 +46,7 @@ const ManageCategory = async ({ categories }: { categories: TCategoriesProps[] }
     {
       accessorKey: "_id",
       header: () => <div className="text-lg text-neutral-800">Action</div>,
-      cell: ({ row }) => (
+      cell: ({ row }: any) => (
         <div className="flex">
           <Button onClick={() => handleDelete(row.original._id)}>
             <Trash />

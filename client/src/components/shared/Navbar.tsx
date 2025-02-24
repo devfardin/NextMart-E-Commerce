@@ -18,13 +18,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { protectedRoutes } from "@/contants";
 
 export default function Navbar() {
-  const { user, setIsLoading} = useUser();
+  const { user, setIsLoading } = useUser();
   const pathname = usePathname()
   const router = useRouter();
   const handleLogout = () => {
     logOut();
     setIsLoading(true);
-    if(protectedRoutes.some(route => pathname.match(route))) {
+    if (protectedRoutes.some(route => pathname.match(route))) {
       router.push('/');
     }
   }
@@ -53,17 +53,21 @@ export default function Navbar() {
               <DropdownMenuTrigger>
                 <Avatar>
                   <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>{(user?.name).slice(0,1)}</AvatarFallback>
+                  <AvatarFallback>{(user?.name).slice(0, 1)}</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56 rounded">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="rounded hover:bg-[#F4F4F5] cursor-pointer">Profile</DropdownMenuItem>
+                <DropdownMenuItem className="rounded hover:bg-[#F4F4F5] cursor-pointer">
+                  <Link href='http://localhost:3000/user/dashboard'>
+                    Profile
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem className="rounded hover:bg-[#F4F4F5] cursor-pointer">Setting</DropdownMenuItem>
                 <Link href='/create-shop'>
-                <DropdownMenuItem className="rounded hover:bg-[#F4F4F5] cursor-pointer">Create Shop</DropdownMenuItem>
-                <DropdownMenuSeparator />
+                  <DropdownMenuItem className="rounded hover:bg-[#F4F4F5] cursor-pointer">Create Shop</DropdownMenuItem>
+                  <DropdownMenuSeparator />
                 </Link>
                 <DropdownMenuItem onClick={handleLogout} className="rounded hover:bg-[#F4F4F5] cursor-pointer"> Log Out </DropdownMenuItem>
               </DropdownMenuContent>
