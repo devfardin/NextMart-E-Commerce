@@ -15,9 +15,8 @@ const CreateShopForm = () => {
     const [imageFiles, setImageFiles] = useState<File[] | []>([]);
     const [imagePreview, setImagePreview] = useState<string[] | []>([]);
     const form = useForm();
-    const {
-        formState: { isSubmitting },
-    } = form;
+    const { formState: { isSubmitting } } = form;
+
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const servicesOffered = data.servicesOffered.split(',').map((service: string) => service.trim()).filter((service: string) => service !== '');
         const modifiedData = {
@@ -43,7 +42,6 @@ const CreateShopForm = () => {
         } catch (error: any) {
             toast.error(error?.message)
         }
-
     };
     return (
         <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-4xl p-5 my-5 bg-white">
@@ -87,7 +85,6 @@ const CreateShopForm = () => {
                                 </FormItem>
                             )}
                         />
-
                         <FormField
                             control={form.control}
                             name="address"
